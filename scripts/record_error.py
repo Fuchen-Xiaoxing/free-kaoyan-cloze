@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 record_error.py - 考研英语完形填空错题记录脚本
-将错题以 YAML frontmatter + 正文格式只追加写入错题本.md
+将错题以 YAML frontmatter + 正文格式只追加写入完形填空错题本.md
 支持单条与批量 (JSON 数组) 追加、ID 自动去重递增与 12 类错误枚举/能力短板校验。
 归档成功后默认自动删除输入 JSON 临时文件（--keep-json 可保留），并尝试清理因此变空的临时父目录（最多向上两级，仅删空目录），无需调用方手动清理。
 """
@@ -39,13 +39,13 @@ ERROR_TYPES = [
 # 能力短板封闭集合
 ABILITY_SHORTBOARDS = ["词汇", "语法", "主旨"]
 
-DEFAULT_FILE_NAME = "错题本.md"
+DEFAULT_FILE_NAME = "完形填空错题本.md"
 
 def sanitize_notebook_path(raw_path: str) -> str:
     """
     对错题本路径进行安全净化与自愈：
-    1. 若因环境编码剥离等原因导致文件名退化为 '.md'，自动纠偏至 '<parent>/考研英语/错题本.md'；
-    2. 若路径指向已存在的目录或以斜杠结尾，自动在该目录下追加 '考研英语/错题本.md'（若目录已是 '考研英语' 则追加 '错题本.md'）；
+    1. 若因环境编码剥离等原因导致文件名退化为 '.md'，自动纠偏至 '<parent>/考研英语/完形填空错题本.md'；
+    2. 若路径指向已存在的目录或以斜杠结尾，自动在该目录下追加 '考研英语/完形填空错题本.md'（若目录已是 '考研英语' 则追加 '完形填空错题本.md'）；
     3. 保证返回绝对路径。
     """
     if not raw_path:
@@ -72,18 +72,18 @@ def get_default_notebook_path() -> str:
     """
     智能解析错题本安全持久化存储路径，彻底与 Skill 目录解耦（保障更新/重装 Skill 绝不丢失）：
     1. 环境变量优先：KAOYAN_ERROR_NOTEBOOK 或 ERROR_NOTEBOOK_PATH（带自动路径自愈）
-    2. Open Minis 外部挂载 Documents 优先（/var/minis/mounts/Documents/考研英语/错题本.md）
+    2. Open Minis 外部挂载 Documents 优先（/var/minis/mounts/Documents/考研英语/完形填空错题本.md）
     3. Android 手机公共文档目录原生探测：
-       - /storage/emulated/0/Documents/考研英语/错题本.md
-       - /sdcard/Documents/考研英语/错题本.md
-       - /storage/emulated/0/Download/考研英语/错题本.md
-       - /sdcard/Download/考研英语/错题本.md
+       - /storage/emulated/0/Documents/考研英语/完形填空错题本.md
+       - /sdcard/Documents/考研英语/完形填空错题本.md
+       - /storage/emulated/0/Download/考研英语/完形填空错题本.md
+       - /sdcard/Download/考研英语/完形填空错题本.md
     4. Open Minis 沙盒持久工作区降级：
-       - /var/minis/workspace/错题本.md
+       - /var/minis/workspace/完形填空错题本.md
     5. PC / 常规环境（Windows / macOS / Linux）公共文档目录：
-       - ~/Documents/考研英语/错题本.md
+       - ~/Documents/考研英语/完形填空错题本.md
     6. 全局用户主目录安全兜底：
-       - ~/.free-kaoyan-cloze/错题本.md
+       - ~/.free-kaoyan-cloze/完形填空错题本.md
     """
     # 1. 环境变量优先（进行路径自愈净化）
     env_path = os.environ.get("KAOYAN_ERROR_NOTEBOOK") or os.environ.get("ERROR_NOTEBOOK_PATH")
@@ -407,7 +407,7 @@ def append_errors(file_path, items):
         os.makedirs(parent_dir, exist_ok=True)
 
     if not os.path.exists(file_path):
-        header = "# 错题本\n\n本文件存放考研英语错题，由 FREE 考研英语系列 (free-kaoyan-cloze) skill 维护。\n\n## 错题列表\n"
+        header = "# 完形填空错题本\n\n本文件存放考研英语错题，由 FREE 考研英语系列 (free-kaoyan-cloze) skill 维护。\n\n## 错题列表\n"
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(header)
     else:

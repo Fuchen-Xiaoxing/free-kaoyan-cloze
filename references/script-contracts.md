@@ -14,7 +14,7 @@
 
 - **命令格式**：`python3 scripts/record_error.py [--file <路径>] [--info] --json <JSON字符串或文件路径> [--keep-json]`（亦支持 stdin 管道输入，**建议省略 `--file` 走默认安全持久化路径**；Minis 沙箱环境工作目录在 workspace 时可使用绝对路径 `/var/minis/skills/free-kaoyan-cloze/scripts/record_error.py`）
 - **功能特性**：
-  - **安全持久化与路径自愈**：`--file` 参数可选（传入目录或 `.md` 时自动自愈为 `考研英语/错题本.md`）。在 Open Minis / Android PRoot 环境下，默认优先探测已挂载的外部文档目录（`/var/minis/mounts/Documents/考研英语/错题本.md`）或系统公共文档目录（`/storage/emulated/0/Documents/考研英语/错题本.md`），支持 Obsidian、WPS 或自带文件管理器直接查阅；若未挂载则安全保存在 `/var/minis/workspace/错题本.md`；支持环境变量 `KAOYAN_ERROR_NOTEBOOK` 自定义路径；
+  - **安全持久化与路径自愈**：`--file` 参数可选（传入目录或 `.md` 时自动自愈为 `考研英语/完形填空错题本.md`）。在 Open Minis / Android PRoot 环境下，默认优先探测已挂载的外部文档目录（`/var/minis/mounts/Documents/考研英语/完形填空错题本.md`）或系统公共文档目录（`/storage/emulated/0/Documents/考研英语/完形填空错题本.md`），支持 Obsidian、WPS 或自带文件管理器直接查阅；若未挂载则安全保存在 `/var/minis/workspace/完形填空错题本.md`；支持环境变量 `KAOYAN_ERROR_NOTEBOOK` 自定义路径；
   - **存储状态诊断**：支持 `--info` / `--status` 快速查看当前解析到的错题本路径、可写性与已存错题数量；
   - **历史数据自动迁移**：若检测到旧 Skill 目录中残留有效错题，首次归档时自动将历史条目无损合并至持久化错题本，并备份旧文件；
   - **数据归档与校验**：强制标准 ID 命名（`YYYY-[E1-|E2-]Cloze-Q[01-20]`，如 `2015-Cloze-Q05`、`2021-E1-Cloze-Q12`，自动规范化异形命名）、支持刷次标签（默认 `一刷`，支持 `二刷`/`三刷` 等）、12 类完形错误类型与能力短板严格校验、记录选项与副错误类型、YAML frontmatter + 正文格式批量追加（只追加、不覆盖、自动清理占位符 `（暂无）`）。脚本内置宽容度别名映射。**归档成功后默认自动删除输入 JSON 临时文件及其变空的临时父目录**（`--keep-json` 保留）。
